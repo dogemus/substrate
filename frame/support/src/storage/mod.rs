@@ -1798,7 +1798,7 @@ mod test {
 			MyStorageMap::insert(10, 100);
 
 			let op = |(_, v)| v / 10;
-			let mut final_vec = vec![];
+			let mut final_vec = Vec::new();
 			let mut iter = MyStorageMap::iter();
 
 			let elem = iter.next().unwrap();
@@ -1854,14 +1854,14 @@ mod test {
 			assert_eq!(
 				ChildTriePrefixIterator::with_prefix(&child_info_a, &[2])
 					.collect::<Vec<(Vec<u8>, u16)>>(),
-				vec![(vec![], 8), (vec![2, 3], 8),],
+				vec![(Vec::new(), 8), (vec![2, 3], 8),],
 			);
 
 			assert_eq!(
 				ChildTriePrefixIterator::with_prefix(&child_info_a, &[2])
 					.drain()
 					.collect::<Vec<(Vec<u8>, u16)>>(),
-				vec![(vec![], 8), (vec![2, 3], 8),],
+				vec![(Vec::new(), 8), (vec![2, 3], 8),],
 			);
 
 			// The only remaining is the ones outside prefix

@@ -227,7 +227,7 @@ where
 	OnEmpty: crate::traits::Get<QueryKind::Query> + 'static,
 {
 	fn build_metadata(docs: Vec<&'static str>, entries: &mut Vec<StorageEntryMetadataIR>) {
-		let docs = if cfg!(feature = "no-metadata-docs") { vec![] } else { docs };
+		let docs = if cfg!(feature = "no-metadata-docs") { Vec::new() } else { docs };
 
 		let entry = StorageEntryMetadataIR {
 			name: Prefix::STORAGE_PREFIX,
@@ -363,9 +363,9 @@ mod test {
 			A::kill();
 			assert_eq!(A::try_get(), Err(()));
 
-			let mut entries = vec![];
-			A::build_metadata(vec![], &mut entries);
-			AValueQueryWithAnOnEmpty::build_metadata(vec![], &mut entries);
+			let mut entries = Vec::new();
+			A::build_metadata(Vec::new(), &mut entries);
+			AValueQueryWithAnOnEmpty::build_metadata(Vec::new(), &mut entries);
 			assert_eq!(
 				entries,
 				vec![
@@ -374,14 +374,14 @@ mod test {
 						modifier: StorageEntryModifierIR::Optional,
 						ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 						default: Option::<u32>::None.encode(),
-						docs: vec![],
+						docs: Vec::new(),
 					},
 					StorageEntryMetadataIR {
 						name: "foo",
 						modifier: StorageEntryModifierIR::Default,
 						ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 						default: 97u32.encode(),
-						docs: vec![],
+						docs: Vec::new(),
 					}
 				]
 			);

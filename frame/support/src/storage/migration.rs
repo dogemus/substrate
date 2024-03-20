@@ -442,7 +442,7 @@ mod tests {
 			move_prefix(&Twox128::hash(b"my_old_pallet"), &Twox128::hash(b"my_new_pallet"));
 
 			assert_eq!(OldStorageValue::get(), None);
-			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(NewStorageValue::get(), Some(3));
 			assert_eq!(NewStorageMap::iter().collect::<Vec<_>>(), vec![(1, 2), (3, 4)]);
 		})
@@ -458,14 +458,14 @@ mod tests {
 			move_storage_from_pallet(b"foo_map", b"my_old_pallet", b"my_new_pallet");
 
 			assert_eq!(OldStorageValue::get(), Some(3));
-			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(NewStorageValue::get(), None);
 			assert_eq!(NewStorageMap::iter().collect::<Vec<_>>(), vec![(1, 2), (3, 4)]);
 
 			move_storage_from_pallet(b"foo_value", b"my_old_pallet", b"my_new_pallet");
 
 			assert_eq!(OldStorageValue::get(), None);
-			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(NewStorageValue::get(), Some(3));
 			assert_eq!(NewStorageMap::iter().collect::<Vec<_>>(), vec![(1, 2), (3, 4)]);
 		})
@@ -481,7 +481,7 @@ mod tests {
 			move_pallet(b"my_old_pallet", b"my_new_pallet");
 
 			assert_eq!(OldStorageValue::get(), None);
-			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(NewStorageValue::get(), Some(3));
 			assert_eq!(NewStorageMap::iter().collect::<Vec<_>>(), vec![(1, 2), (3, 4)]);
 		})
@@ -507,7 +507,7 @@ mod tests {
 					.collect::<Vec<i32>>(),
 				vec![2, 4],
 			);
-			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(OldStorageMap::iter().collect::<Vec<_>>(), Vec::new());
 
 			// Empty because storage iterator skips over the entry under the first key
 			assert_eq!(storage_iter::<i32>(b"my_old_pallet", b"foo_value").drain().next(), None);

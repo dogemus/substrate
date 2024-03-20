@@ -463,7 +463,7 @@ where
 		<Self as MapWrapper>::Map::build_metadata(docs, entries);
 		CounterFor::<Prefix>::build_metadata(
 			if cfg!(feature = "no-metadata-docs") {
-				vec![]
+				Vec::new()
 			} else {
 				vec!["Counter for the related counted storage map"]
 			},
@@ -559,7 +559,7 @@ mod test {
 		type A = CountedStorageMap<Prefix, Twox64Concat, u16, u32, ValueQuery, ADefault>;
 
 		TestExternalities::default().execute_with(|| {
-			let mut k: Vec<u8> = vec![];
+			let mut k: Vec<u8> = Vec::new();
 			k.extend(&twox_128(b"test"));
 			k.extend(&twox_128(b"foo"));
 			k.extend(&3u16.twox_64_concat());
@@ -783,7 +783,7 @@ mod test {
 		type B = CountedStorageMap<Prefix, Twox64Concat, u16, u32>;
 
 		TestExternalities::default().execute_with(|| {
-			let mut k: Vec<u8> = vec![];
+			let mut k: Vec<u8> = Vec::new();
 			k.extend(&twox_128(b"test"));
 			k.extend(&twox_128(b"foo"));
 			k.extend(&3u16.twox_64_concat());
@@ -1131,7 +1131,7 @@ mod test {
 			A::insert(4, 4);
 
 			// no prefix is same as normal iter.
-			assert_eq!(A::iter_from(vec![]).collect::<Vec<_>>(), A::iter().collect::<Vec<_>>());
+			assert_eq!(A::iter_from(Vec::new()).collect::<Vec<_>>(), A::iter().collect::<Vec<_>>());
 
 			let iter_all = A::iter().collect::<Vec<_>>();
 			let (before, after) = iter_all.split_at(2);
@@ -1143,8 +1143,8 @@ mod test {
 	#[test]
 	fn test_metadata() {
 		type A = CountedStorageMap<Prefix, Twox64Concat, u16, u32, ValueQuery, ADefault>;
-		let mut entries = vec![];
-		A::build_metadata(vec![], &mut entries);
+		let mut entries = Vec::new();
+		A::build_metadata(Vec::new(), &mut entries);
 		assert_eq!(
 			entries,
 			vec![
@@ -1157,7 +1157,7 @@ mod test {
 						value: scale_info::meta_type::<u32>(),
 					},
 					default: 97u32.encode(),
-					docs: vec![],
+					docs: Vec::new(),
 				},
 				StorageEntryMetadataIR {
 					name: "counter_for_foo",
@@ -1165,7 +1165,7 @@ mod test {
 					ty: StorageEntryTypeIR::Plain(scale_info::meta_type::<u32>()),
 					default: vec![0, 0, 0, 0],
 					docs: if cfg!(feature = "no-metadata-docs") {
-						vec![]
+						Vec::new()
 					} else {
 						vec!["Counter for the related counted storage map"]
 					},

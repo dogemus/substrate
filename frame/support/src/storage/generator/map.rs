@@ -416,7 +416,7 @@ mod test_iterators {
 
 			assert_eq!(Map::drain().collect::<Vec<_>>(), vec![(3, 3), (0, 0), (2, 2), (1, 1)]);
 
-			assert_eq!(Map::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(Map::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(unhashed::get(&key_before_prefix(prefix.clone())), Some(1u64));
 			assert_eq!(unhashed::get(&key_after_prefix(prefix.clone())), Some(1u64));
 

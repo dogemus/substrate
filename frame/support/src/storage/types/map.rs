@@ -438,7 +438,7 @@ where
 	MaxValues: Get<Option<u32>>,
 {
 	fn build_metadata(docs: Vec<&'static str>, entries: &mut Vec<StorageEntryMetadataIR>) {
-		let docs = if cfg!(feature = "no-metadata-docs") { vec![] } else { docs };
+		let docs = if cfg!(feature = "no-metadata-docs") { Vec::new() } else { docs };
 
 		let entry = StorageEntryMetadataIR {
 			name: Prefix::STORAGE_PREFIX,
@@ -562,7 +562,7 @@ mod test {
 		type WithLen = StorageMap<Prefix, Blake2_128Concat, u16, Vec<u32>>;
 
 		TestExternalities::default().execute_with(|| {
-			let mut k: Vec<u8> = vec![];
+			let mut k: Vec<u8> = Vec::new();
 			k.extend(&twox_128(b"test"));
 			k.extend(&twox_128(b"foo"));
 			k.extend(&3u16.blake2_128_concat());
@@ -721,7 +721,7 @@ mod test {
 			A::insert(4, 10);
 			assert_eq!(A::iter().collect::<Vec<_>>(), vec![(4, 10), (3, 10)]);
 			assert_eq!(A::drain().collect::<Vec<_>>(), vec![(4, 10), (3, 10)]);
-			assert_eq!(A::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(A::iter().collect::<Vec<_>>(), Vec::new());
 
 			C::insert(3, 10);
 			C::insert(4, 10);
@@ -737,9 +737,9 @@ mod test {
 			let _ = A::translate_next::<u8, _>(None, |_, _| None);
 			assert_eq!(A::iter().collect::<Vec<_>>(), vec![(3, 10)]);
 
-			let mut entries = vec![];
-			A::build_metadata(vec![], &mut entries);
-			AValueQueryWithAnOnEmpty::build_metadata(vec![], &mut entries);
+			let mut entries = Vec::new();
+			A::build_metadata(Vec::new(), &mut entries);
+			AValueQueryWithAnOnEmpty::build_metadata(Vec::new(), &mut entries);
 			assert_eq!(
 				entries,
 				vec![
@@ -752,7 +752,7 @@ mod test {
 							value: scale_info::meta_type::<u32>(),
 						},
 						default: Option::<u32>::None.encode(),
-						docs: vec![],
+						docs: Vec::new(),
 					},
 					StorageEntryMetadataIR {
 						name: "foo",
@@ -763,7 +763,7 @@ mod test {
 							value: scale_info::meta_type::<u32>(),
 						},
 						default: 97u32.encode(),
-						docs: vec![],
+						docs: Vec::new(),
 					}
 				]
 			);

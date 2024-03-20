@@ -560,7 +560,7 @@ mod test_iterators {
 				vec![((3, 3), 3), ((0, 0), 0), ((2, 2), 2), ((1, 1), 1)],
 			);
 
-			assert_eq!(NMap::iter().collect::<Vec<_>>(), vec![]);
+			assert_eq!(NMap::iter().collect::<Vec<_>>(), Vec::new());
 			assert_eq!(unhashed::get(&key_before_prefix(prefix.clone())), Some(1u64));
 			assert_eq!(unhashed::get(&key_after_prefix(prefix.clone())), Some(1u64));
 
@@ -589,7 +589,7 @@ mod test_iterators {
 				vec![(1, 1), (2, 2), (0, 0), (3, 3)],
 			);
 
-			assert_eq!(NMap::iter_prefix((k1,)).collect::<Vec<_>>(), vec![]);
+			assert_eq!(NMap::iter_prefix((k1,)).collect::<Vec<_>>(), Vec::new());
 			assert_eq!(unhashed::get(&key_before_prefix(prefix.clone())), Some(1u64));
 			assert_eq!(unhashed::get(&key_after_prefix(prefix.clone())), Some(1u64));
 
